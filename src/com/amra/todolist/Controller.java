@@ -1,5 +1,6 @@
 package com.amra.todolist;
 
+
 import com.amra.todolist.datamodel.TodoItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -15,46 +16,38 @@ public class Controller {
     private List<TodoItem> todoItems;
 
     @FXML
-    private ListView<TodoItem> todoListView;
+    private ListView<TodoItem> toDoListView;
+
     @FXML
-    private TextArea itemDetailsTextArea;
+    private TextArea itemDetailTextArea;
 
 
+    public void initialize(){
+        TodoItem item1 = new TodoItem("Mail birthday card","Buy a 30th birthday card", LocalDate.of(2016, Month.APRIL,25));
+        TodoItem item2 = new TodoItem("Doctor's appointment","See Dr.Smith at 1223Main Street", LocalDate.of(2016, Month.MAY,03));
+        TodoItem item3 = new TodoItem("Finish design proposal","Respond with an email.", LocalDate.of(2016, Month.APRIL,22));
+        TodoItem item4 = new TodoItem("Pickup Bri at the train station","Bry arriving on March 23", LocalDate.of(2016, Month.MARCH,23));
+        TodoItem item5 = new TodoItem("Pickup dry cleaning","Clothes ready by Wednesday", LocalDate.of(2016, Month.APRIL,25));
 
 
-    public void initialize() {
-        TodoItem item1 = new TodoItem("Mail Birthday card", "Buy a 30 birthday card for John",
-                LocalDate.of(2016, Month.APRIL, 25));
-        TodoItem item2 = new TodoItem("Doctors Appointment", "See Doctor Smith ",
-                LocalDate.of(2016, Month.MAY, 23));
-        TodoItem item3 = new TodoItem("Finish design proposal", "Promised design proposal to Mike ",
-                LocalDate.of(2016, Month.APRIL, 21));
-        TodoItem item4 = new TodoItem("Pickup Sam at the airport", "Sam's arriving ",
-                LocalDate.of(2016, Month.MARCH, 22));
-        TodoItem item5 = new TodoItem("Pick up dry cleaning", "Clothes should be ready by Wednesday",
-                LocalDate.of(2016, Month.APRIL, 20));
-
-
-        this.todoItems = new ArrayList<TodoItem>();
+        todoItems = new ArrayList<TodoItem>();
         todoItems.add(item1);
         todoItems.add(item2);
         todoItems.add(item3);
         todoItems.add(item4);
         todoItems.add(item5);
-
-        todoListView.getItems().setAll(todoItems);
-        todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        toDoListView.getItems().setAll(todoItems);
+        toDoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     @FXML
     public void handleClickListView(){
-        TodoItem item = todoListView.getSelectionModel().getSelectedItem();
+        TodoItem item = toDoListView.getSelectionModel().getSelectedItem();
 //        System.out.println("The selected item is " + item);
         StringBuilder sb = new StringBuilder(item.getDetails());
         sb.append("\n\n\n\n");
-        sb.append("Due: ");
+        sb.append("Due:");
         sb.append(item.getDeadLine().toString());
-        itemDetailsTextArea.setText(sb.toString());
-
+        itemDetailTextArea.setText(sb.toString());
     }
 }

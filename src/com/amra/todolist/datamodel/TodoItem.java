@@ -1,11 +1,13 @@
 package com.amra.todolist.datamodel;
 
+
 import java.time.LocalDate;
 
 public class TodoItem {
     private String shortDescription;
     private String details;
     private LocalDate deadLine;
+
 
     public TodoItem(String shortDescription, String details, LocalDate deadLine) {
         this.shortDescription = shortDescription;
