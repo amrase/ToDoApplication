@@ -2,13 +2,17 @@ package com.amra.todolist;
 
 
 import com.amra.todolist.datamodel.TodoItem;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,8 @@ public class Controller {
 
     @FXML
     private TextArea itemDetailTextArea;
+    @FXML
+    private Label deadLineLabel;
 
 
     public void initialize(){
@@ -36,18 +42,36 @@ public class Controller {
         todoItems.add(item3);
         todoItems.add(item4);
         todoItems.add(item5);
+
+
+        toDoListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TodoItem>() {
+            @Override
+            public void changed(ObservableValue<? extends TodoItem> observable, TodoItem oldValue, TodoItem newValue) {
+                if(newValue != null){
+                    TodoItem item = toDoListView.getSelectionModel().getSelectedItem();
+                    itemDetailTextArea.setText(item.getDetails());
+//                    deadLineLabel.setText(item.getDeadLine().toString());
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+                    deadLineLabel.setText(df.format(item.getDeadLine()));
+                }
+            }
+        });
+
         toDoListView.getItems().setAll(todoItems);
         toDoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        toDoListView.getSelectionModel().selectFirst();
     }
 
     @FXML
     public void handleClickListView(){
         TodoItem item = toDoListView.getSelectionModel().getSelectedItem();
 //        System.out.println("The selected item is " + item);
-        StringBuilder sb = new StringBuilder(item.getDetails());
-        sb.append("\n\n\n\n");
-        sb.append("Due:");
-        sb.append(item.getDeadLine().toString());
-        itemDetailTextArea.setText(sb.toString());
+//        StringBuilder sb = new StringBuilder(item.getDetails());
+//        sb.append("\n\n\n\n");
+//        sb.append("Due:");
+//        sb.append(item.getDeadLine().toString());
+//        itemDetailTextArea.setText(sb.toString());
+        itemDetailTextArea.setText(item.getDetails());
+        deadLineLabel.setText(item.getDeadLine().toString());
     }
 }
