@@ -18,6 +18,8 @@
                 <items>
                     <MenuItem text="New..." onAction="#showNewItemDialog"/>
                     <SeparatorMenuItem/>
+                    <MenuItem text="Save" />
+                    <SeparatorMenuItem/>
                     <MenuItem text="Exit"/>
                 </items>
             </Menu>

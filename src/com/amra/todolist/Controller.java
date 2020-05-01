@@ -6,13 +6,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Month;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,7 @@ public class Controller {
                 }
             }
         });
-        todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
+        todoListView.setItems(TodoData.getInstance().getTodoItems());
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         todoListView.getSelectionModel().selectFirst();
     }
@@ -54,9 +52,15 @@ public class Controller {
     public void showNewItemDialog(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPain.getScene().getWindow());
+        dialog.setTitle("Add New Todo Item");
+        dialog.setHeaderText("Use this dialog to create a new todo item");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("todoitemDialog.fxml"));
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("todoitemDialog.fxml"));
-            dialog.getDialogPane().setContent(root);
+
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+//            Parent root = FXMLLoader.load(getClass().getResource("todoitemDialog.fxml"));
+//            dialog.getDialogPane().setContent(root);
         }
         catch (Exception e){
             System.out.println("Couldn't load the dialog");
@@ -68,11 +72,14 @@ public class Controller {
 
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK){
-            System.out.println("Ok pressed");
+            DialogController controller = fxmlLoader.getController();
+            TodoItem newItem = controller.processResults();
+         // todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
+            todoListView.getSelectionModel().select(newItem);
         }
-        else{
-            System.out.println("Cancel pressed");
-        }
+//        else{
+//            System.out.println("Cancel pressed");
+//        }
     }
 
     @FXML
