@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
 
 
 import java.time.format.DateTimeFormatter;
@@ -46,6 +47,19 @@ public class Controller {
         todoListView.setItems(TodoData.getInstance().getTodoItems());
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         todoListView.getSelectionModel().selectFirst();
+
+        todoListView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
+            @Override
+            public ListCell<TodoItem> call(ListView<TodoItem> param) {
+                ListCell<TodoItem> cell = new ListCell<TodoItem>(){
+                    @Override
+                    protected void updateItem(TodoItem item, boolean empty) {
+                        super.updateItem(item, empty);
+                    }
+                };
+                return cell;
+            }
+        });
     }
 
     @FXML
