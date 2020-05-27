@@ -1,6 +1,5 @@
 package com.amra.todolist.datamodel;
 
-
 import java.time.LocalDate;
 
 public class TodoItem {
@@ -38,9 +37,8 @@ public class TodoItem {
         this.deadline = deadline;
     }
 
-
     @Override
     public String toString() {
-        return shortDescription;
+        return  shortDescription;
     }
 }

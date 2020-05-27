@@ -1,11 +1,14 @@
 package com.amra.todolist;
 
+
 import com.amra.todolist.datamodel.TodoData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class Main extends Application {
@@ -21,19 +24,18 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-
-
+    //store data
     @Override
     public void stop() throws Exception {
        try{
-           TodoData.getInstance().storeTodoItems();
-        }
+            TodoData.getInstance().storeTodoItems();
+       }
        catch (Exception e){
            System.out.println(e.getMessage());
        }
     }
 
+    //load data
     @Override
     public void init() throws Exception {
         try{
